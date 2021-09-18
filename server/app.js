@@ -6,6 +6,10 @@ const path = require('path');
 const AWS = require('aws-sdk')
 require("dotenv").config();
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+}
+
 const db = new Db();
 console.log(db.connectDB());
 
@@ -24,6 +28,10 @@ const s3 = new AWS.S3({
     endpoint: spacesEndpoint,
     accessKeyId: process.env.ACCESS_KEY_ID,
     secretAccessKey: process.env.SECRET_ACCESS_KEY
+});
+
+app.get('*', (request, response) => {
+	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 // Add a file to a Space
