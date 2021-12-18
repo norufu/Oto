@@ -1,6 +1,7 @@
 <template>
   <div id="listComponent">
-    <div v-for="(s, i) in sentences" v-bind:key="i" >
+    <!-- sentence, index, drive link -->
+    <div v-for="(s, i) in sentences" v-bind:key="i" >  
       <list-item-component :sentence="s" :search="search" :index="i" ></list-item-component>
     </div>
   </div>    
@@ -14,8 +15,8 @@ export default {
     ListItemComponent
   },
   props: {
-    sentences: Object,
-    search: String
+    sentences: Array,
+    search: String,
   },
   data() {
     return {
@@ -29,10 +30,14 @@ export default {
       removeItem(sentenceIndex) {
         this.$emit('removeItem', sentenceIndex)
       },
-      playAudio(sentenceIndex) {
+      audioPlay(sentenceIndex) {
         console.log('list component')
         this.$emit('playSound', sentenceIndex)
       }
+ // playAudio(sentenceIndex) {
+      //   console.log('list component')
+      //   this.$emit('playSound', sentenceIndex)
+      // }
   },
 };
 </script>

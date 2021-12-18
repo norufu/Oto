@@ -20,7 +20,12 @@ class Db {
     async searchWord(searchTerm) {
       let audioData = (await this.db.find({quote: {$regex: searchTerm, $options : 'gi'}}).toArray())
       audioData = audioData.slice(0,4) //limit # of calls we'll make for audio
+      console.log(audioData);
       return(audioData)
+    }
+
+    async test() {
+      console.log('yeah it test');
     }
 } 
 

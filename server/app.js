@@ -6,15 +6,15 @@ const path = require('path');
 const AWS = require('aws-sdk')
 require("dotenv").config();
 
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('client/build'));
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	app.use(express.static('client/build'));
+// }
 
 const db = new Db();
 console.log(db.connectDB());
 
 const app = express();
-// app.use(express.static('C:\Users\Joshua\Desktop\sentence site\oto\public'))
+app.use(express.static('C:\Users\Joshua\Desktop\sentence site\oto\public'))
 
 const router = express.Router();
 // middleware
@@ -23,22 +23,31 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 // Configure client for use with Spaces
-const spacesEndpoint = new AWS.Endpoint('fra1.digitaloceanspaces.com');
-const s3 = new AWS.S3({
-    endpoint: spacesEndpoint,
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY
-});
+// const spacesEndpoint = new AWS.Endpoint('fra1.digitaloceanspaces.com');
+// const s3 = new AWS.S3({
+//     endpoint: spacesEndpoint,
+//     accessKeyId: process.env.ACCESS_KEY_ID,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY
+// });
 
-app.get('*', (request, response) => {
-	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// app.get('*', (request, response) => {
+// 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// });
+app.get('/', (request, response) => {
+  console.log("home pls")
 });
-
 // Add a file to a Space
 router.get("/uploadWordData", async (req, res) => {
     console.log('test')
     loadInFiles();
     res.status(200).send();
+});
+
+router.get("/idk", async (req, res) => {
+  console.log('ok');
+  console.log(req.query);
+  await db.test();
+  res.sendStatus(200);
 });
 
 router.get("/searchWord", async (req, res) => {
@@ -50,21 +59,23 @@ router.get("/searchWord", async (req, res) => {
     }
     // http://localhost:3000/static/3-gatsu_no_Lion_01_0.01.53.927-0.01.57.680.wav
     r = await db.searchWord(req.query.searchTerm);
-    let files = []
-    for(let i = 0; i < r.length; i++) {
-      files.push(r[i].file)
-    }
-    let audioData = []
-    for(let i = 0; i < r.length; i++) {
-      audioData[i] = getAudio(r[i].file)
-    }
-    console.log('AUDIO DATA\n\n ')
-    await Promise.allSettled(audioData).then(function(results){
-      console.log(results)
-      for(let i = 0; i < results.length; i++){
-        r[i].data = results[i].value;
-      }
-    })
+
+    //S3 Bucket setup for digitalocean
+    // let files = []
+    // for(let i = 0; i < r.length; i++) {
+    //   files.push(r[i].file)
+    // }
+    // let audioData = []
+    // for(let i = 0; i < r.length; i++) {
+    //   audioData[i] = getAudio(r[i].file)
+    // }
+    // console.log('AUDIO DATA\n\n ')
+    // await Promise.allSettled(audioData).then(function(results){
+    //   console.log(results)
+    //   for(let i = 0; i < results.length; i++){
+    //     r[i].data = results[i].value;
+    //   }
+    // })
     console.log(r)
     res.send(r);
 });

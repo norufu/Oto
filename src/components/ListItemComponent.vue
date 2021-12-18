@@ -2,13 +2,16 @@
   <div id = 'container'>
     <div id="item" v-bind:class="[ (index%2 === 0) ? 'even' : 'odd']">
       <!-- <div id = "sentenceWrapper"> -->
-        <div @click="playAudio" id = "playWrapper" width = "auto">
+        <div @click="audioPlay" id = "playWrapper" width = "auto">
           <img  class="audioIcon" width ="32px" height = "55px" src="../../public/playButton.svg" />
         </div>
         <div>
           <p v-bind:id="[String(index)]"></p>
         </div>
       <!-- </div> -->
+      <audio v-bind:id="'audio' + [String(index)]">
+        <source v-bind:src="sentence.drive">
+      </audio>
     </div>  
     <!-- <hr class="my-4 middleHR"> -->
 
@@ -43,12 +46,16 @@ export default {
       removeItem() {
         this.$parent.removeItem(this.index);
       },
-      playAudio() {
-        console.log('list item')
-        this.$parent.playAudio(this.index);      
+      audioPlay() {
+        console.log(this.drive);
+        this.$parent.audioPlay(this.index);      
       },
+      // playAudio() {    used for the S3 buckets version of audio
+      //   console.log('list item')
+      //   this.$parent.playAudio(this.index);      
+      // },
       colourString() {
-        console.log('yesss')
+        // console.log('yesss')
         // str = str.replace(/red/g, '<span style="color:red;">red</span>');
       }
   },

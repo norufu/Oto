@@ -1,5 +1,9 @@
 <template>
   <div class="home">
+    <audio id = 'aud'>
+      <source src="https://docs.google.com/uc?export=download&id=1D7_BdUs7BZqn9LDCRPZ3LctfcNqo6u5o">
+    </audio>
+    <!-- <button v-on:click="audioPlay">test</button> -->
     <div id = "searchWrapper">
       <div >
         <b-form-input id='searchTerm' class = 'search' v-model="searchTerm" placeholder="探す"></b-form-input>
@@ -49,6 +53,7 @@ export default {
           for(var i = 0; i < response.data.length; i++) { // sentenceData[i] = {(sound)data, file, quote, show, translation}
             this.sentenceData.push(response.data[i])
           }
+          console.log(this.sentenceData);
           document.getElementById("searchButton").disabled = false;
         })
     },
@@ -56,28 +61,35 @@ export default {
       console.log(i);
       this.sentences.splice(i, 1);
     },
-    playSound: async function(sentenceIndex) { //sample rate should be 48000 https://stackoverflow.com/questions/24151121/how-to-play-wav-audio-byte-array-via-javascript-html5
-      let data = this.sentenceData[sentenceIndex].data.data;
-      const aCtx = new AudioContext();
-      let source = aCtx.createBufferSource();
-      let gainNode = aCtx.createGain();
-      gainNode.gain.value = 0.4 // 50% volume
-      gainNode.connect(aCtx.destination);
+    playSound: async function(sentenceIndex) {
+      //get sentence audio adjust volume & play
+      let audio = document.getElementById("audio" + sentenceIndex);
+      audio.volume = 0.3;
+      audio.play();
+    }
+    //this play sound function works with the S3 buckets data
+   // playSound: async function(sentenceIndex) { //sample rate should be 48000 https://stackoverflow.com/questions/24151121/how-to-play-wav-audio-byte-array-via-javascript-html5
+    //   let data = this.sentenceData[sentenceIndex].data.data;
+    //   const aCtx = new AudioContext();
+    //   let source = aCtx.createBufferSource();
+    //   let gainNode = aCtx.createGain();
+    //   gainNode.gain.value = 0.4 // 50% volume
+    //   gainNode.connect(aCtx.destination);
 
-      source.connect(gainNode)
-      let arrayBuffer = new ArrayBuffer(data.length);
-      let bufferView = new Uint8Array(arrayBuffer);
-      for (let i = 0; i < data.length; i++) {
-        bufferView[i] = data[i];
-      }
+    //   source.connect(gainNode)
+    //   let arrayBuffer = new ArrayBuffer(data.length);
+    //   let bufferView = new Uint8Array(arrayBuffer);
+    //   for (let i = 0; i < data.length; i++) {
+    //     bufferView[i] = data[i];
+    //   }
 
-      let newBuf = await aCtx.decodeAudioData(arrayBuffer);
-      source.buffer = newBuf;
-      source.connect(gainNode);
-      // source.connect(aCtx.destination)
-      source.start(0);
-      console.log('started?');
-    },
+    //   let newBuf = await aCtx.decodeAudioData(arrayBuffer);
+    //   source.buffer = newBuf;
+    //   source.connect(gainNode);
+    //   // source.connect(aCtx.destination)
+    //   source.start(0);
+    //   console.log('started?');
+    // },
     }
 };
 
