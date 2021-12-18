@@ -6,16 +6,18 @@ const path = require('path');
 const AWS = require('aws-sdk')
 require("dotenv").config();
 
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static('client/build'));
-// }
+
 
 const db = new Db();
 console.log(db.connectDB());
 
 const app = express();
-app.use(express.static('C:\Users\Joshua\Desktop\sentence site\oto\public'))
-
+if (process.env.NODE_ENV === 'production') {
+ 	app.use(express.static('__dirname\build'));
+}
+else {
+   app.use(express.static('C:\Users\Joshua\Desktop\sentence site\oto\public'))
+}
 const router = express.Router();
 // middleware
 app.use(cors());
