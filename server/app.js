@@ -13,10 +13,10 @@ console.log(db.connectDB());
 
 const app = express();
 if (process.env.NODE_ENV === 'production') {
- 	app.use(express.static('oto\build'));
+ 	app.use(express.static('/app/public/'));
   app.get('*', (request, response) => {
    console.log("getting *")
- 	 response.render(path.join('/app/public/', 'index.html'));
+ 	 response.sendFile('/app/public/' + 'index.html'));
   });
 }
 else {
