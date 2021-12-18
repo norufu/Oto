@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
  	app.use(express.static('oto\build'));
   app.get('*', (request, response) => {
    console.log("getting *")
- 	 response.sendFile(path.join('../src/views', 'Home.vue'));
+ 	 response.sendFile(path.join('/app/src/views', 'Home.vue'));
   });
 }
 else {
