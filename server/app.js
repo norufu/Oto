@@ -13,7 +13,11 @@ console.log(db.connectDB());
 
 const app = express();
 if (process.env.NODE_ENV === 'production') {
- 	app.use(express.static('__dirname\build'));
+ 	app.use(express.static('oto\build'));
+  app.get('*', (request, response) => {
+   console.log("getting *")
+ 	 response.sendFile(path.join(__dirname, 'src/views', 'index.html'));
+  });
 }
 else {
    app.use(express.static('C:\Users\Joshua\Desktop\sentence site\oto\public'))
@@ -35,9 +39,7 @@ router.use(bodyParser.json());
 // app.get('*', (request, response) => {
 // 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 // });
-app.get('/', (request, response) => {
-  console.log("home pls")
-});
+
 // Add a file to a Space
 router.get("/uploadWordData", async (req, res) => {
     console.log('test')
