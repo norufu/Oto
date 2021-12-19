@@ -1,4 +1,5 @@
 const express = require("express");
+const serveStatic = require("serve-static")
 const Db = require("./db");
 const bodyParser = require("body-parser");
 const cors = require('cors');
@@ -12,8 +13,9 @@ const db = new Db();
 console.log(db.connectDB());
 
 const app = express();
+app.use(express.static('/app/public/'));
+
 if (process.env.NODE_ENV === 'production') {
- 	app.use(express.static('/app/public/'));
   app.get('*', (request, response) => {
    console.log("getting *")
  	 response.sendFile('/app/public/' + 'index.html');
