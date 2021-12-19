@@ -16,7 +16,7 @@ const app = express();
 app.use(express.static('/app/dist/'));
 
 if (process.env.NODE_ENV === 'production') {
-  app.get('*', (request, response) => {
+  app.get('/', (request, response) => {
    console.log("getting *")
  	 response.sendFile('/app/public/' + 'index.html');
   });
