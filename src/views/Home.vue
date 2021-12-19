@@ -44,7 +44,7 @@ export default {
 
       this.sentenceData = []
       await this.$http
-        .get("http://localhost:5000/searchWord", {  // Gets phrases for the search term
+        .get("/searchWord", {  // Gets phrases for the search term
           params: {
             searchTerm: this.searchTerm
           }
