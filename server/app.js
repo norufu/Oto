@@ -1,4 +1,5 @@
 const express = require("express");
+const serveStatic = require("serve-static")
 const Db = require("./db");
 const bodyParser = require("body-parser");
 const cors = require('cors');
@@ -6,16 +7,23 @@ const path = require('path');
 const AWS = require('aws-sdk')
 require("dotenv").config();
 
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static('client/build'));
-// }
+
 
 const db = new Db();
 console.log(db.connectDB());
 
 const app = express();
-app.use(express.static('C:\Users\Joshua\Desktop\sentence site\oto\public'))
+app.use(express.static('/app/dist/'));
 
+if (process.env.NODE_ENV === 'production') {
+  app.get('/', (request, response) => {
+   console.log("getting *")
+ 	 response.sendFile('/app/public/' + 'index.html');
+  });
+}
+else {
+   app.use(express.static('C:\Users\Joshua\Desktop\sentence site\oto\public'))
+}
 const router = express.Router();
 // middleware
 app.use(cors());
@@ -33,9 +41,7 @@ router.use(bodyParser.json());
 // app.get('*', (request, response) => {
 // 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 // });
-app.get('/', (request, response) => {
-  console.log("home pls")
-});
+
 // Add a file to a Space
 router.get("/uploadWordData", async (req, res) => {
     console.log('test')
