@@ -1,20 +1,21 @@
 <template>
   <div class="home">
-    <audio id = 'aud'>
-      <source src="https://docs.google.com/uc?export=download&id=1D7_BdUs7BZqn9LDCRPZ3LctfcNqo6u5o">
-    </audio>
-    <!-- <button v-on:click="audioPlay">test</button> -->
-    <div id = "searchWrapper">
-      <div >
-        <b-form-input id='searchTerm' class = 'search' v-model="searchTerm" placeholder="探す"></b-form-input>
-      </div>
-      <div>
-        <b-button  v-on:click="searchWord" id = "searchButton" variant="light">Go</b-button>
-        <!-- <button v-on:click="searchWord" id = "searchButton">Go</button> -->
-      </div>
+    <div v-if="!hasSearched" id="instructionDiv">
+      <h1>Welcome to Oto!</h1>
+      <h2>Type in a Japanese word or phrase to find an example from TV or Movies <br>
+        For example try `だった` or `have`
+      </h2>
     </div>
 
+    <form @submit.prevent="searchWord">
+        <div id = "searchWrapper">
+          <b-form-input id='searchTerm' class = 'search' v-model="searchTerm" placeholder="探す"></b-form-input>
+          <b-button  type="submit" v-on:click="searchWord" id = "searchButton" variant="light">Go</b-button>
+        </div>
+    </form>
+
     <div id  = "resultsDiv">
+      <p id="resultsMessage" v-if="!sentenceData.length && hasSearched">No search results to show, maybe try a shorter phrase.</p>
       <list-component :sentences="sentenceData" :search="searchTerm" @playSound="playSound($event)" @removeItem="removeSentence($event)"></list-component>
     </div>
 
@@ -31,6 +32,8 @@ export default {
       return {
         searchTerm: null,
         testAudio: null,
+        audio: null,
+        hasSearched: false,
         // sentences: [],
         sentenceData: []
       }
@@ -55,6 +58,7 @@ export default {
           }
           console.log(this.sentenceData);
           document.getElementById("searchButton").disabled = false;
+          this.hasSearched = true;
         })
     },
     removeSentence: function(i) {
@@ -63,9 +67,12 @@ export default {
     },
     playSound: async function(sentenceIndex) {
       //get sentence audio adjust volume & play
-      let audio = document.getElementById("audio" + sentenceIndex);
-      audio.volume = 0.3;
-      audio.play();
+      if(this.audio) {  //pause incase audio is already playing
+        this.audio.pause();
+      }
+      this.audio = document.getElementById("audio" + sentenceIndex);
+      this.audio.volume = 0.3;
+      this.audio.play();
     }
     //this play sound function works with the S3 buckets data
    // playSound: async function(sentenceIndex) { //sample rate should be 48000 https://stackoverflow.com/questions/24151121/how-to-play-wav-audio-byte-array-via-javascript-html5
@@ -102,17 +109,27 @@ export default {
     align-items: center;
     justify-content: center;
   }
+
+  #instructionDiv {
+    padding-top:10px;
+  }
   #searchWrapper {
     padding:25px;
     display: flex;
     justify-content: center;
-    flex-direction: row ;
+    flex-direction: row;
     width: 100%;
     height:auto;
   }
+  .form {
+    width:100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;  
+    }
   #searchButton {
     height:100%;
-    outline: none;
+    /* outline: none; */
   }
   .btn:focus {
     outline: none;
@@ -128,5 +145,9 @@ export default {
   } 
   #resultsDiv {
     width: 80%
+  }
+
+  #resultsMessage {
+    font-size:25px;
   }
 </style>

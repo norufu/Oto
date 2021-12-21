@@ -19,13 +19,12 @@ class Db {
 
     async searchWord(searchTerm) {
       let audioData = (await this.db.find({quote: {$regex: searchTerm, $options : 'gi'}}).toArray())
-      audioData = audioData.slice(0,4) //limit # of calls we'll make for audio
-      console.log(audioData);
-      return(audioData)
-    }
 
-    async test() {
-      console.log('yeah it test');
+      if(audioData.length == 0) { //if no japanese was found may be searching english, check translations
+        audioData = (await this.db.find({translation: {$regex: searchTerm, $options : 'gi'}}).toArray())
+      }
+      audioData = audioData.slice(0,5) //limit # of calls we'll make for audio
+      return(audioData)
     }
 } 
 

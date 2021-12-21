@@ -1,6 +1,6 @@
 <template>
   <div id = 'container'>
-    <div id="item" v-bind:class="[ (index%2 === 0) ? 'even' : 'odd']">
+    <div id="item" v-bind:class="[ (index%2 === 0) ? 'even' : 'odd']" v-bind:title="`Show: ` + sentence.show">
       <!-- <div id = "sentenceWrapper"> -->
         <div @click="audioPlay" id = "playWrapper" width = "auto">
           <img  class="audioIcon" width ="32px" height = "55px" src="../../public/playButton.svg" />
@@ -16,7 +16,7 @@
     <!-- <hr class="my-4 middleHR"> -->
 
     <div id="translations">
-      <p>> {{sentence.translation}}</p>
+      <p v-bind:id="`translation` + [String(index)]"></p>
     </div>
     <hr class="my-4">
 
@@ -33,14 +33,17 @@ export default {
   },
   data() {
     return {
-      outputText: ""
+      outputText: "",
+      translationText: ""
     };
   },
   mounted() {
     //highlight the searched word in text
     var re = new RegExp(this.search, "g");
     this.outputText = this.sentence.quote.replace(re, '<span style="color:#77B26A;">' + this.search + '</span>');
+    this.translationText = '> ' + this.sentence.translation.replace(re, '<span style="color:#77B26A;">' + this.search + '</span>');
     document.getElementById(this.index).innerHTML = this.outputText;
+    document.getElementById(`translation` + this.index).innerHTML = this.translationText;
   },
   methods: {
       removeItem() {
