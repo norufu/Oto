@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar class="navbar-custom shadow-sm" toggleable="lg">
-      <b-navbar-brand to="/" href="">
+      <b-navbar-brand to="/about">
         <img class="logo" width ="10%" height = "10%" src="../../public/oto logo.svg" />
       </b-navbar-brand>
 
