@@ -21,12 +21,13 @@ class Db {
 
     async searchWord(searchTerm) {
       let cleanSearch = sanitize(searchTerm);
-      let audioData = (await this.db.find({quote: {$regex: cleanSearch, $options : 'gi'}}).toArray())
+
+      let audioData = (await this.db.find({quote: {$regex: cleanSearch, $options : 'gi'}}).limit(10).toArray())
 
       if(audioData.length == 0) { //if no japanese was found may be searching english, check translations
-        audioData = (await this.db.find({translation: {$regex: cleanSearch, $options : 'gi'}}).toArray())
+        audioData = (await this.db.find({translation: {$regex: cleanSearch, $options : 'gi'}}).limit(10).toArray())
       }
-      audioData = audioData.slice(0,5) //limit # of calls we'll make for audio
+      // audioData = audioData.slice(0,5) //limit # of calls we'll make for audio
       return(audioData)
     }
 } 
