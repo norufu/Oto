@@ -1,8 +1,8 @@
 <template>
   <div>
     <b-navbar class="navbar-custom shadow-sm" toggleable="lg">
-      <b-navbar-brand to="/">
-        <img class="logo" width ="10%" height = "10%" src="../../public/oto logo.svg" />
+      <b-navbar-brand id ="brand" to="/">
+        <img class="logo" width ="70%" height = "70%" src="../../public/oto logo.svg" />
       </b-navbar-brand>
 
     </b-navbar>
@@ -17,9 +17,13 @@ export default {
 </script>
 
 <style scoped>
+    #brand {
+      width:50px;
+      height:50px;
+    }
     .logo {
     transform: scale(1.4);
-    margin-left: 20px;
+    margin-left: 0px;
     }
     .navbar-custom {
     background-color: whitesmoke;

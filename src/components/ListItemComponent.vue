@@ -145,4 +145,22 @@ button:focus {outline:0;}
 #removeButton {
   background-color: rgb(192, 3, 3);
 }
+
+@media (max-width: 700px) {
+  p {
+    font-size: 30px;
+    margin: 0px;
+    padding: 0px;
+    padding-left:8px
+  }
+  #sentenceWrapper p {
+    margin: 0px;
+    font-size: 30px;
+    height:100%;
+  }
+  #translations p {
+    width: 100%;
+    font-size: 17px;
+  }
+}
 </style>

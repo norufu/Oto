@@ -150,4 +150,13 @@ export default {
   #resultsMessage {
     font-size:25px;
   }
+
+  @media (max-width: 700px) {
+    h1, h2, p {
+      font-size:25px;
+    }
+    p {
+      font-size:10px;
+    }
+  }
 </style>

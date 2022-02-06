@@ -1,5 +1,7 @@
 const mongodb = require("mongodb");
 require("dotenv").config();
+const sanitize = require('mongo-sanitize');
+
 // https://stackoverflow.com/questions/11330917/how-to-play-a-mp3-using-javascript
 class Db {
     constructor() {
@@ -18,10 +20,11 @@ class Db {
     }
 
     async searchWord(searchTerm) {
-      let audioData = (await this.db.find({quote: {$regex: searchTerm, $options : 'gi'}}).toArray())
+      let cleanSearch = sanitize(searchTerm);
+      let audioData = (await this.db.find({quote: {$regex: cleanSearch, $options : 'gi'}}).toArray())
 
       if(audioData.length == 0) { //if no japanese was found may be searching english, check translations
-        audioData = (await this.db.find({translation: {$regex: searchTerm, $options : 'gi'}}).toArray())
+        audioData = (await this.db.find({translation: {$regex: cleanSearch, $options : 'gi'}}).toArray())
       }
       audioData = audioData.slice(0,5) //limit # of calls we'll make for audio
       return(audioData)
