@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
    console.log(path.join(__dirname, 'dist'));
    console.log("yea");
    console.log(__dirname);
- 	 response.sendFile('app/public/index.html');
+ 	 response.sendFile('/opt/render/project/src/server/dist/index.html');
   });
 }
 else {
