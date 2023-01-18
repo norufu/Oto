@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <div v-if="!hasSearched" id="instructionDiv">
+    //<div v-if="!hasSearched" id="instructionDiv">
+    <div id="instructionDiv">
+
       <h1>Welcome to Oto!</h1>
       <h2>Type in a Japanese word or phrase to find an example from TV or Movies <br>
         For example try `だった` or `have`
