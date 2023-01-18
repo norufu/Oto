@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    //<div v-if="!hasSearched" id="instructionDiv">
     <div id="instructionDiv">
 
       <h1>Welcome to Oto!</h1>
