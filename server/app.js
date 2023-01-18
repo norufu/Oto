@@ -18,8 +18,10 @@ app.use(express.static('/app/dist/'));
 if (process.env.NODE_ENV === 'production') {
   app.get('/', (request, response) => {
    console.log("getting *");
-   console.log(path.join(__dirname, 'dist'))
- 	 response.sendFile('index.html');
+   console.log(path.join(__dirname, 'dist'));
+   console.log("yea");
+   console.log(__dirname);
+ 	 response.sendFile('app/public/index.html');
   });
 }
 else {
