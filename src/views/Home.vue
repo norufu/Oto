@@ -1,13 +1,17 @@
 <template>
   <div class="home">
+  
     <div id="instructionDiv">
-
       <h1>Welcome to Oto!</h1>
       <h2>Type in a Japanese word or phrase to find an example from TV or Movies <br>
         For example try `だった` or `have`
       </h2>
     </div>
 
+    <div id="test">
+      <h1>test</h1>
+    </div>
+    
     <form @submit.prevent="searchWord">
         <div id = "searchWrapper">
           <b-form-input id='searchTerm' class = 'search' v-model="searchTerm" placeholder="探す"></b-form-input>
