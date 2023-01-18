@@ -13,7 +13,7 @@ const db = new Db();
 console.log(db.connectDB());
 
 const app = express();
-app.use(express.static('/opt/render/project/src/app/public/'));
+app.use(express.static('/opt/render/project/src/app/dist/'));
 
 if (process.env.NODE_ENV === 'production') {
   app.get('/', (request, response) => {
