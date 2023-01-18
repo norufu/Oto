@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
    console.log("yea");
    console.log(__dirname);
     var fs = require('fs');
-    var files = fs.readdirSync("opt/render/project/src/public/dist");
+    var files = fs.readdirSync("opt/render/project/src/dist");
     console.log(files)
  	 response.sendFile('/opt/render/project/src/public/index.html');
   });
