@@ -13,17 +13,11 @@ const db = new Db();
 console.log(db.connectDB());
 
 const app = express();
-app.use(express.static('/opt/render/project/src/app/dist'));
+app.use(express.static('/opt/render/project/src/dist'));
 
 if (process.env.NODE_ENV === 'production') {
   app.get('/', (request, response) => {
    console.log("getting *");
-   console.log(path.join(__dirname, 'dist'));
-   console.log("yea");
-   console.log(__dirname);
-    var fs = require('fs');
-    var files = fs.readdirSync("/opt/render/project/src/dist");
-    console.log(files)
  	 response.sendFile('/opt/render/project/src/dist/index.html');
   });
 }
