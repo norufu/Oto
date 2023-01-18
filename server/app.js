@@ -18,7 +18,7 @@ app.use(express.static('/opt/render/project/src/dist'));
 if (process.env.NODE_ENV === 'production') {
   app.get('/', (request, response) => {
    console.log("getting *");
- 	 response.sendFile('/opt/render/project/src/dist/index.html');
+ 	 response.sendFile('index.html');
   });
 }
 else {
