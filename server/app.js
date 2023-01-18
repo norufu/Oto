@@ -18,7 +18,7 @@ app.use(express.static('/app/dist/'));
 if (process.env.NODE_ENV === 'production') {
   app.get('/', (request, response) => {
    console.log("getting *");
- 	 response.sendFile('/index.html');
+ 	 response.sendFile('public/index.html');
   });
 }
 else {
