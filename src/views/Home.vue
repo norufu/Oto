@@ -1,17 +1,13 @@
 <template>
   <div class="home">
   
-    <div>
+    <div v-if="!hasSearched" id="instructionDiv">
       <h1>Welcome to Oto!</h1>
       <h2>Type in a Japanese word or phrase to find an example from TV or Movies <br>
         For example try `だった` or `have`
       </h2>
     </div>
 
-    <div>
-      <h1>test</h1>
-    </div>
-    
     <form @submit.prevent="searchWord">
         <h1>test</h1>
         <div id = "searchWrapper">
@@ -20,10 +16,6 @@
         </div>
     </form>
 
-    <div id  = "resultsDiv">
-      <p id="resultsMessage" v-if="!sentenceData.length && hasSearched">No search results to show, maybe try a shorter phrase.</p>
-      <list-component :sentences="sentenceData" :search="searchTerm" @playSound="playSound($event)" @removeItem="removeSentence($event)"></list-component>
-    </div>
     <div id  = "resultsDiv">
       <p id="resultsMessage" v-if="!sentenceData.length && hasSearched">No search results to show, maybe try a shorter phrase.</p>
       <list-component :sentences="sentenceData" :search="searchTerm" @playSound="playSound($event)" @removeItem="removeSentence($event)"></list-component>
